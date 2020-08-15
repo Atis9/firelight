@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <link
+      href="https://fonts.googleapis.com/css?family=M+PLUS+1p"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+
+      html,
+      body {
+        height: 100%;
+      }
+
+      .container {
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.4);
+        color: white;
+        font-family: "M PLUS 1p";
+        font-size: 14px;
+        box-sizing: border-box;
+        border-radius: 6px 6px 0 6px;
+        background-image: linear-gradient(
+          -45deg,
+          rgba(255, 255, 255, 0.4) 10px,
+          transparent 0
+        );
+      }
+
+      .list-players {
+        padding: 6px;
+        text-align: left;
+      }
+
+      .list-players th,
+      .list-players td {
+        padding: 0 5px;
+        border-bottom: 1px solid gray;
+      }
+
+      .icon-job {
+        background-size: 24px 24px;
+        background-repeat: no-repeat;
+        background-position: center;
+        height: 24px;
+        width: 24px;
+      }
+
+      .text-name {
+        min-width: 50px;
+      }
+
+      .text-dps {
+        text-align: right;
+        min-width: 80px;
+      }
+
+      .text-deaths {
+        text-align: right;
+        min-width: 20px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <div id="app">
+        <table class="list-players">
+          <tr>
+            <th>
+              <div class="icon-job"></div>
+            </th>
+            <th>
+              <div class="text-name">Name</div>
+            </th>
+            <th>
+              <div class="text-dps">DPS</div>
+            </th>
+            <th>
+              <div class="text-deaths">X(</div>
+            </th>
+          </tr>
+          <tr v-for="p in players">
+            <td>
+              <div class="icon-job" :class="'icon-' + p.Job"></div>
+            </td>
+            <td>
+              <div class="text-name">{{ p.name }}</div>
+            </td>
+            <td>
+              <div class="text-dps">{{ p.encdps }}</div>
+            </td>
+            <td>
+              <div class="text-deaths">{{ p.deaths }}</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+    <script>
+      var app = new Vue({
+        el: "#app",
+        data: () => {
+          return {
+            players: null
+          };
+        }
+      });
+
+      document.addEventListener("onOverlayDataUpdate", event => {
+        console.log(event);
+        app.players = event.detail.Combatant;
+      });
+    </script>
+
+    <style>
+      /* Tank */
+      .icon-Mrd {
+        background-image: url("https://img.finalfantasyxiv.com/lds/promo/h/w/i0Qqk20XpSpIH_5Aevv1Pi86G4.png");
+      }
+      .icon-War {
+        background-image: url("https://img.finalfantasyxiv.com/lds/promo/h/0/U3f8Q98TbAeGvg_vXiHGOaa2d4.png");
+      }
+      .icon-Gla {
+        background-image: url("https://img.finalfantasyxiv.com/lds/promo/h/Y/xnoiSFoEZ4_6bUwz3CvzhsqtXM.png");
+      }
+      .icon-Pld {
+        background-image: url("https://img.finalfantasyxiv.com/lds/promo/h/V/NUXU4h6iXzF8HS4BxHKYf7vOa0.png");
+      }
+      .icon-Drk {
+        background-image: url("https://img.finalfantasyxiv.com/lds/promo/h/9/5JT3hJnBNPZSLAijAF9u7zrueQ.png");
+      }
+      .icon-Gnb {
+        background-image: url("https://img.finalfantasyxiv.com/lds/promo/h/8/fc5PYpEFGrg4qPYDq_YBbCy1X0.png");
+      }
+
+      /* Healer */
+      .icon-Cnj {
+        background-image: url("https://img.finalfantasyxiv.com/lds/promo/h/b/KBrPT1hRA2mY65-3HBOycw4Kn8.png");
+      }
+      .icon-Whm {
+        background-image: url("https://img.finalfantasyxiv.com/lds/promo/h/G/Na619RGtVtbEvNn1vyFoSlvZ84.png");
+      }
+      .icon-Sch {
+        background-image: url("https://img.finalfantasyxiv.com/lds/promo/h/s/2r8fm3U0Io7Pw1XT1tvnjPthp4.png");
+      }
+      .icon-Ast {
+        background-image: url("https://img.finalfantasyxiv.com/lds/promo/h/E/g7JY4S1D-9S26VarEuIkPGIrFM.png");
+      }
+
+      /* DPS */
+      .icon-Pgl {
+        background-image: url("https://img.finalfantasyxiv.com/lds/promo/h/t/5cqUqFtgdpy9D9-dk0OPyDN9Os.png");
+      }
+      .icon-Mnk {
+        background-image: url("https://img.finalfantasyxiv.com/lds/promo/h/C/Ce_VQB6VPPJKTGJwxf3h5iujp4.png");
+      }
+      .icon-Lnc {
+        background-image: url("https://img.finalfantasyxiv.com/lds/promo/h/u/k_Q1zZVmdBmR240Xj6jDJGMiMA.png");
+      }
+      .icon-Drg {
+        background-image: url("https://img.finalfantasyxiv.com/lds/promo/h/1/zWRkXGJIJhN7WHGGv1gVscRxmA.png");
+      }
+      .icon-Rog {
+        background-image: url("https://img.finalfantasyxiv.com/lds/promo/h/Q/yTZOXpPWSy3fsiBbQUtdZKcAJo.png");
+      }
+      .icon-Nin {
+        background-image: url("https://img.finalfantasyxiv.com/lds/promo/h/N/EXvdQYvr1Rn4En8AKssbVwwcac.png");
+      }
+      .icon-Sam {
+        background-image: url("https://img.finalfantasyxiv.com/lds/promo/h/J/Ra2GV79gVQhy6SwCrU19boTghc.png");
+      }
+      .icon-Arc {
+        background-image: url("https://img.finalfantasyxiv.com/lds/promo/h/K/gm9qOAy0dmiDT1-4iIAS9G5bx8.png");
+      }
+      .icon-Brd {
+        background-image: url("https://img.finalfantasyxiv.com/lds/promo/h/b/d7BM1x8OZRZU-9fTk-D7g1t2oc.png");
+      }
+      .icon-Mch {
+        background-image: url("https://img.finalfantasyxiv.com/lds/promo/h/2/oHLJxTt_OLDK_eQkRTBVNwwxeE.png");
+      }
+      .icon-Dnc {
+        background-image: url("https://img.finalfantasyxiv.com/lds/promo/h/0/ZzzbixB1HHW9FaxNXdfY7Y7lvw.png");
+      }
+      .icon-Thm {
+        background-image: url("https://img.finalfantasyxiv.com/lds/promo/h/Q/Zlo0xBHOBte3IGPo8SY9XUcGes.png");
+      }
+      .icon-Blk {
+        background-image: url("https://img.finalfantasyxiv.com/lds/promo/h/A/7JuT00VSwaFqTfcTYUCUnGPFQE.png");
+      }
+      .icon-Acn {
+        background-image: url("https://img.finalfantasyxiv.com/lds/promo/h/k/_3v-EDzckpsEC39oe0t4A8pLJk.png");
+      }
+      .icon-Smn {
+        background-image: url("https://img.finalfantasyxiv.com/lds/promo/h/b/ZwJFxv3XnfqB5N6tKbgXKnj6BU.png");
+      }
+      .icon-Rdm {
+        background-image: url("https://img.finalfantasyxiv.com/lds/promo/h/C/NRnqJxzRtbDKR1ZHzxazWBBR2Y.png");
+      }
+    </style>
+  </body>
+</html>
